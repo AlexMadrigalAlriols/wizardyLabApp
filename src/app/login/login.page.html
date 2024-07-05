@@ -1,0 +1,33 @@
+<ion-content class="login-container">
+  <div>
+    <img src="assets/img/waveLogin.svg" alt="" class="wave">
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="login-form">
+      <img src="assets/img/LogoLetters.png" alt="" class="logo">
+      <h1 class="title">WELCOME</h1>
+
+      <div class="input-div" id="login-container">
+          <div class="icon">
+              <i class="bx bx-envelope"></i>
+          </div>
+          <div class="input-container">
+              <h5>Email</h5>
+              <input type="text" name="email" [(ngModel)]="email" required class="login-input">
+          </div>
+      </div>
+      <div class="text-start d-none" id="error-container">
+        <span class="text-danger">The credentials do not match our records.</span>
+      </div>
+      <div class="input-div mt-4">
+          <div class="icon">
+              <i class="bx bx-lock-alt"></i>
+          </div>
+          <div class="input-container">
+              <h5>Password</h5>
+              <input type="password" name="password" [(ngModel)]="password" required class="login-input">
+          </div>
+      </div>
+
+      <button class="btn" type="submit" [disabled]="!loginForm.form.valid"><i class='bx bx-log-in'></i> Login</button>
+    </form>
+  </div>
+</ion-content>
