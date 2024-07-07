@@ -1,1 +1,5 @@
-
+ion-tab-bar {
+  --background: var(--secondary-color) !important;
+  --color-selected: var(--primary-color) !important;
+  --color: var(--menu-txt-color) !important;
+}

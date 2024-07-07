@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../-services/auth.service';
+import { LoadingController } from '@ionic/angular';
 import * as $ from 'jquery';
 
 @Component({
@@ -12,14 +13,18 @@ export class LoginPage implements AfterViewInit, OnInit {
   email: null|string = null;
   password: null|string = null;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private loadingController: LoadingController) {}
 
-  onLogin() {
+  async onLogin() {
+    const loading = await this.loadingController.create();
+    await loading.present();
     if (this.email && this.password) {
       this.authService.login(this.email, this.password).then(success => {
         if (success) {
+          loading.dismiss();
           this.router.navigate(['/tabs']);
         } else {
+          loading.dismiss();
           $('#login-container').addClass('error');
           $('#error-container').removeClass('d-none')
         }
