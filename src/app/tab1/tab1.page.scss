@@ -5,3 +5,76 @@ button {
 ion-tab-bar {
   --background: var(--secondary-color) !important;
 }
+
+#map {
+  height: 100%;
+  width: 100%;
+}
+
+.header-bg {
+  position: relative;
+  text-align: center;
+  background-color: #007bff;
+  color: white;
+  padding-bottom: 2px;
+}
+
+.curve-container {
+  position: absolute;
+  bottom: -98px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.curve-container svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 100px; /* Ajustar según el tamaño deseado */
+}
+
+.profile-pic {
+  margin: 0px auto;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: white;
+  padding: 5px;
+}
+
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+h2 {
+  margin: 10px 0 0 0;
+}
+
+.employee-id,
+.date-time,
+.time {
+  margin: 5px 0;
+}
+
+.container {
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+}
+
+ion-grid {
+  margin: 20px 0;
+}
+
+ion-col p {
+  margin: 5px 0;
+}
+
+ion-button {
+  margin-top: 20px;
+}

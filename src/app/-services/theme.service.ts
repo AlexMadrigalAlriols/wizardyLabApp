@@ -14,7 +14,6 @@ export class ThemeService {
     .subscribe(async (event: NavigationEnd) => {
         if (event.url !== '/login') {
           const portal = await this.authService.getPortalDetails();
-          console.log(portal);
           this.updateTheme(portal.data);
         }
       });

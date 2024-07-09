@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ThemeService } from '../-services/theme.service';
+import { AuthService } from '../-services/auth.service';
 
 @Component({
   selector: 'app-tabs',
@@ -8,6 +9,9 @@ import { ThemeService } from '../-services/theme.service';
 })
 export class TabsPage {
 
-  constructor(private themeService: ThemeService) {}
+  constructor(private themeService: ThemeService, private authService: AuthService) {}
 
+  logout() {
+    this.authService.logout();
+  }
 }
