@@ -1,0 +1,31 @@
+{
+  "global": {
+    "cancel": "Cancel",
+    "close": "Close",
+    "delete": "Delete",
+    "edit": "Edit",
+    "save": "Save",
+    "search": "Search",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK",
+    "loading": "Loading...",
+    "loadingData": "Loading data...",
+    "loadingError": "Error loading data"
+  },
+  "tabs": {
+    "attendance": "Attendance",
+    "tasks": "Tasks",
+    "notes": "Notes",
+    "logout": "Logout"
+  },
+  "clock_in": "Clock In",
+  "clock_out": "Clock Out",
+  "estimated_hours": "Estimated Hours",
+  "break_time": "Break Time",
+  "hours": "Hours",
+  "working_time": "Working Time",
+  "ubication_pin_message": "You are here"
+}

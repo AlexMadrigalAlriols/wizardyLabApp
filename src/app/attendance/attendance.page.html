@@ -1,0 +1,58 @@
+<ion-content [fullscreen]="true">
+  <div class="header-bg pt-5 text-center">
+    <div class="profile-pic">
+      <img src="{{ user.profile_img }}" alt="Profile Picture">
+    </div>
+    <h2 class="h1"><b>{{ user.name }}</b></h2>
+    <p class="employee-id" class="text-muted h3">{{ user.code }}</p>
+    <div class="mt-4">
+      <p class="date-time h4">{{ currentDateLong }}</p>
+      <p class="time h1"><b>{{ currentTime }}</b></p>
+    </div>
+  </div>
+  <div class="curve-container">
+    <svg class="curve" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+      <path [attr.fill]="primary_color" fill-opacity="1" d="M0,96L48,101.3C96,107,192,117,288,138.7C384,160,480,192,576,186.7C672,181,768,139,864,106.7C960,75,1056,53,1152,69.3C1248,85,1344,139,1392,165.3L1440,192L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+    </svg>
+  </div>
+  <div class="container">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <p><i class='bx bx-coffee'></i> {{ 'break_time' | translate }}</p>
+          <p>{{ this.user.break }}</p>
+        </ion-col>
+        <ion-col>
+          <p><i class='bx bx-time-five' ></i> {{ 'estimated_hours' | translate }}</p>
+          <p>{{ this.user.estimated_work_hours }}</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <p>{{ 'working_time' | translate }}</p>
+    <p class="h1"><b>{{ timer }}</b></p>
+    <button class="btn btn-primary w-100 mt-4" *ngIf="!user.is_clockIn" (click)="openModal()"><b><i class='bx bx-log-in-circle'></i> {{ 'clock_in' | translate }}</b></button>
+    <button class="btn btn-danger w-100 mt-4" *ngIf="user.is_clockIn" (click)="clockOut()"><b><i class='bx bx-log-out-circle'></i> {{ 'clock_out' | translate }}</b></button>
+  </div>
+
+  <ion-modal trigger="open-modal" [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="closeModal()">{{ 'global.cancel' | translate }}</ion-button>
+          </ion-buttons>
+          <ion-title>{{ 'clock_in' | translate }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="clockIn()" [strong]="true">{{ 'global.confirm' | translate }}</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <h4><i class="bx bxs-time-five"></i> {{ currentDate }}</h4>
+        <div #mapContainer id="map" style="height: 400px;"></div>
+        <ion-input id="latitude" hidden></ion-input>
+        <ion-input id="longitude" hidden></ion-input>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

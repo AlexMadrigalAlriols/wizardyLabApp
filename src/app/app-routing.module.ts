@@ -1,17 +1,30 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './-guard/auth.guard';
+import { PortalResolver } from './portal.resolver';
 
 const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    resolve: {
+      portal: PortalResolver
+    }
   },
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
-  }
+  },
+  {
+    path: 'task-details/:id',
+    loadChildren: () => import('./task-details/task-details.module').then( m => m.TaskDetailsPageModule),
+    canActivate: [AuthGuard],
+    resolve: {
+      portal: PortalResolver
+    }
+  },
+
 ];
 @NgModule({
   imports: [

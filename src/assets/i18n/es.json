@@ -1,0 +1,37 @@
+{
+  "global": {
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "save": "Guardar",
+    "search": "Buscar",
+    "submit": "Enviar",
+    "confirm": "Confirmar",
+    "yes": "Sí",
+    "no": "No",
+    "ok": "Aceptar",
+    "loading": "Cargando...",
+    "loadingData": "Cargando datos...",
+    "loadingError": "Error al cargar datos"
+  },
+  "tabs": {
+    "attendance": "Asistencia",
+    "tasks": "Tareas",
+    "notes": "Notas",
+    "logout": "Cerrar sesión"
+  },
+  "errors": {
+    "clock_in": "Error al marcar entrada",
+    "clock_out": "Error al marcar salida"
+  },
+  "clock_in_success": "Entrada marcada",
+  "clock_out_success": "Salida marcada",
+  "clock_in": "Fichar entrada",
+  "clock_out": "Fichar salida",
+  "estimated_hours": "Horas estimadas",
+  "break_time": "Tiempo de descanso",
+  "hours": "Horas",
+  "working_time": "Tiempo de trabajo",
+  "ubication_pin_message": "Estás aquí"
+}

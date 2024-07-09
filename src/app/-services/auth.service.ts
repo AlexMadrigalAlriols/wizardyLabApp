@@ -10,6 +10,7 @@ export class AuthService {
   private isAuthenticated = false;
   private token: string | null = null;
   private portal: string |null = null;
+  private user: string |null = null;
 
   constructor(private router: Router, private framework: FrameworkService) { }
 
@@ -18,7 +19,7 @@ export class AuthService {
       this.framework.post('login', {email, password}, false).subscribe((response: any) => {
         if(response.token) {
           this.isAuthenticated = true;
-          this.token =  response.token;
+          this.token = response.token;
           localStorage.setItem('token', response.token);
           localStorage.setItem('portal', JSON.stringify(response.portal))
           this.portal = JSON.stringify(response.portal);
@@ -39,11 +40,13 @@ export class AuthService {
         (response: any) => {
           localStorage.setItem('portal', JSON.stringify(response.portal));
           this.portal = JSON.stringify(response.portal);
+          this.user = JSON.stringify(response.user);
+          localStorage.setItem('user', JSON.stringify(response.user));
           resolve(this.portal);
         },
         error => {
           this.router.navigate(['/login']);
-          reject(error);  // Rechaza la promesa en caso de error
+          reject(error);
         }
       );
     });
@@ -54,6 +57,7 @@ export class AuthService {
     this.token = null;
     localStorage.removeItem('token');
     localStorage.removeItem('portal');
+    localStorage.removeItem('user');
     this.router.navigate(['/login']);
   }
 
@@ -67,12 +71,12 @@ export class AuthService {
         return JSON.parse(portal);
       })
       .catch(error => {
-        console.error('Error:', error);
+        this.logout();
         this.router.navigate(['/login']);
       });
   }
 
   checkAuthenticated(): boolean {
-    return this.isAuthenticated || !!localStorage.getItem('token');
+    return this.isAuthenticated || !!localStorage.getItem('token') || !!localStorage.getItem('portal');
   }
 }

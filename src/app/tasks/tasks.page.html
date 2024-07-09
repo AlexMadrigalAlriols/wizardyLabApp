@@ -1,0 +1,198 @@
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <div class="row">
+        <div class="col-9">
+          <ion-title size="large"><ion-icon aria-hidden="true" name="reader-outline" class="align-middle"></ion-icon> Tasks <span class="text-muted">({{tasks.length}})</span></ion-title>
+        </div>
+        <div class="col-3 text-end mt-1">
+          <button class="btn btn-primary me-3 mt-1">+</button>
+        </div>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="container">
+    <div class="search-container w-100 mt-3">
+      <i class="bx bx-search search-icon"></i>
+      <input type="text" class="search-input" id="search-input" name="search_input"
+          placeholder="Search Tasks" (input)="searchTasks($event)">
+    </div>
+    <div class="table-responsive mt-3 datatable">
+      <table class="table table-borderless table-hover">
+        <thead class="border-top border-bottom">
+          <tr>
+            <th scope="col" class="min-width-0"></th>
+            <th scope="col" class="title-column">Title</th>
+            <th scope="col">Assigned To</th>
+            <th scope="col">Due Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Priority</th>
+            <th scope="col">Hours Logged</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let task of tasks" >
+            <tr class="table-entry align-middle border-bottom task-{{task.id}}">
+              <td class="text-nowrap">
+                <ng-container *ngIf="task.subtasks.length">
+                  <a href="#" class="text-decoration-none text-dark me-2" (click)="toggleSubTasks($event, task)">
+                    <i [ngClass]="task.expanded ? 'bx bxs-down-arrow' : 'bx bxs-right-arrow'"></i>
+                  </a>
+                </ng-container>
+                <ng-container *ngIf="task.is_clockIn">
+                  <button class="btn btn-attendance-task" (click)="clockOut(task)">
+                    <i class="bx bx-stop-circle align-middle"></i>
+                  </button>
+                </ng-container>
+                <ng-container *ngIf="!task.is_clockIn">
+                  <button class="btn btn-attendance-task" (click)="clockIn(task)">
+                    <i class="bx bx-play-circle align-middle"></i>
+                  </button>
+                </ng-container>
+              </td>
+              <td class="title-column">
+                <a (click)="goToTaskDetail(task.id)" class="text-decoration-none"><b>{{ task.title }}</b></a>
+                <p class="mt-0 mb-0">
+                  <span *ngFor="let label of task.labels" class="badge" [ngStyle]="label.styles">{{ label.title }}</span>
+                </p>
+              </td>
+              <td>
+                <div class="avatar-group">
+                  <div *ngFor="let user of task.users" class="avatar avatar-s">
+                    <img [src]="user.profile_img" alt="avatar" class="rounded-circle">
+                  </div>
+                  <div *ngIf="task.users.length > 3" class="avatar avatar-s">
+                    <div class="avatar-name rounded-circle">
+                      <span>+{{ task.users.length - 3 }}</span>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td [ngClass]="{ 'text-danger': task.is_overdue, 'text-muted': !task.is_overdue }">
+                {{ task.duedate | date: 'dd/MM/yyyy' }}
+              </td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm dropdown-toggle" [ngStyle]="task.status.styles" data-bs-toggle="dropdown" aria-expanded="false">
+                    <b>{{ task.status.title }}</b>
+                    <ul class="dropdown-menu dropdown-menu-sm">
+                      <li class="border-top"*ngFor="let status of statuses"><a class="dropdown-item" (click)="changeStatus(task, status)"><span class="badge" [ngStyle]="status.styles">{{status.title}}</span></a></li>
+                    </ul>
+                  </button>
+                </div>
+              </td>
+              <td><span class="badge bg-{{ task.priority }}">{{ task.priority | titlecase }}</span></td>
+              <td class="text-muted">
+                <span [ngClass]="{ 'text-danger': task.limit_hours && task.total_hours > task.limit_hours }">
+                  {{ task.total_hours }}h
+                </span>
+                / <b>{{ task.limit_hours ?? '-' }}h</b>
+              </td>
+              <td class="text-center">
+                <div class="dropdown">
+                  <button class="btn btn-options" type="button">
+                    <i class="bx bx-dots-horizontal-rounded"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <ng-container *ngFor="let subtask of task.subtasks ?? []">
+              <tr  class="table-entry align-middle border-bottom subtasks-{{ task.id }}" [ngClass]="task.expanded ? '' : 'd-none'">
+                <td class="text-nowrap">
+                  <ng-container *ngIf="subtask.is_clockIn">
+                    <button class="btn ms-5 btn-attendance-task" (click)="clockOut(subtask)">
+                      <i class="bx bx-stop-circle align-middle"></i>
+                    </button>
+                  </ng-container>
+                  <ng-container *ngIf="!subtask.is_clockIn">
+                    <button class="btn ms-5 btn-attendance-task" (click)="clockIn(subtask)">
+                      <i class="bx bx-play-circle align-middle"></i>
+                    </button>
+                  </ng-container>
+                </td>
+                <td class="title-column">
+                  <a href="#" class="text-decoration-none"><b>{{ subtask.title }}</b></a>
+                  <p class="mt-0 mb-0">
+                    <span *ngFor="let label of subtask.labels" class="badge" [ngStyle]="label.styles">{{ label.title }}</span>
+                  </p>
+                </td>
+                <td>
+                  <div class="avatar-group">
+                    <div *ngFor="let user of subtask.users" class="avatar avatar-s">
+                      <img [src]="user.profile_img" alt="avatar" class="rounded-circle">
+                    </div>
+                    <div *ngIf="subtask.users.length > 3" class="avatar avatar-s">
+                      <div class="avatar-name rounded-circle">
+                        <span>+{{ subtask.users.length - 3 }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td [ngClass]="{ 'text-danger': subtask.is_overdue, 'text-muted': !subtask.is_overdue }">
+                  {{ subtask.duedate | date: 'dd/MM/yyyy' }}
+                </td>
+                <td>
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm dropdown-toggle" [ngStyle]="subtask.status.styles">
+                      <b>{{ subtask.status.title }}</b>
+                    </button>
+                  </div>
+                </td>
+                <td><span class="badge bg-{{ subtask.priority }}">{{ subtask.priority | titlecase }}</span></td>
+                <td class="text-muted">
+                  <span [ngClass]="{ 'text-danger': subtask.limit_hours && subtask.total_hours > subtask.limit_hours }">
+                    {{ subtask.total_hours }}h
+                  </span>
+                  / <b>{{ subtask.limit_hours ?? '-' }}h</b>
+                </td>
+                <td class="text-center">
+                  <div class="dropdown">
+                    <button class="btn btn-options" type="button">
+                      <i class="bx bx-dots-horizontal-rounded"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+
+          <tr *ngIf="tasks.length === 0">
+            <td colspan="9" class="text-center py-5">
+              <h5>No tasks found</h5>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row mt-3">
+      <div class="col-6">
+        <span>{{ tasks.length }} to {{ pagination.take ?? 10 }} tasks of <b>{{ pagination.total }}</b></span>
+      </div>
+      <div class="col-6">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination" style="float: right;">
+            <li class="page-item" [ngClass]="{'disabled': pages <= 1 || currentPage <= 1}">
+              <a class="page-link arrow" (click)="changePage(currentPage - 1)">
+                <i class='bx bx-chevron-left'></i>
+              </a>
+            </li>
+            <ng-container *ngFor="let page of range(1, pages)">
+              <li class="page-item" [class.active]="currentPage == page">
+                <a class="page-link" (click)="changePage(page)">
+                  <b>{{ page }}</b>
+                </a>
+              </li>
+            </ng-container>
+            <li class="page-item" [ngClass]="{'disabled': pages <= 1 || currentPage == pages}">
+              <a class="page-link arrow" (click)="changePage(currentPage + 1)">
+                <i class='bx bx-chevron-right'></i>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</ion-content>

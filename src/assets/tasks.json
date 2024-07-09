@@ -1,0 +1,68 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Task 1",
+      "users": [
+        { "id": 1, "profile_url": "assets/avatar1.png" },
+        { "id": 2, "profile_url": "assets/avatar2.png" },
+        { "id": 3, "profile_url": "assets/avatar3.png" }
+      ],
+      "start_date": "2024-01-01",
+      "duedate": "2024-01-10",
+      "status": { "id": 1, "title": "In Progress", "styles": { "color": "#00ff00" } },
+      "priority": "high",
+      "total_hours": 5,
+      "limit_hours": 10,
+      "is_overdue": false,
+      "labels": [{ "id": 1, "title": "Bug", "styles": { "background-color": "#ff0000" } }],
+      "subtasks": []
+    },
+    {
+      "id": 2,
+      "title": "Task 2",
+      "users": [
+        { "id": 4, "profile_url": "assets/avatar4.png" },
+        { "id": 5, "profile_url": "assets/avatar5.png" }
+      ],
+      "start_date": "2024-02-01",
+      "duedate": "2024-02-15",
+      "status": { "id": 2, "title": "Completed", "styles": { "color": "#0000ff" } },
+      "priority": "medium",
+      "total_hours": 8,
+      "limit_hours": 8,
+      "is_overdue": false,
+      "labels": [],
+      "subtasks": [
+        {
+          "id": 3,
+          "title": "Subtask 1",
+          "users": [
+            { "id": 1, "profile_url": "assets/avatar1.png" }
+          ],
+          "start_date": "2024-02-02",
+          "duedate": "2024-02-10",
+          "status": { "id": 1, "title": "In Progress", "styles": { "color": "#00ff00" } },
+          "priority": "low",
+          "total_hours": 2,
+          "limit_hours": 4,
+          "is_overdue": false,
+          "labels": []
+        }
+      ]
+    }
+  ],
+  "statuses": [
+    { "id": 1, "title": "In Progress", "styles": { "color": "#00ff00" } },
+    { "id": 2, "title": "Completed", "styles": { "color": "#0000ff" } }
+  ],
+  "pagination": {
+    "take": 10,
+    "pages": 1
+  },
+  "counters": {
+    "total": 2
+  },
+  "isAllPages": false,
+  "currentPage": 1
+}
