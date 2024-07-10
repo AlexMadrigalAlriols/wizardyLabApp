@@ -1,13 +1,192 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>task-details</ion-title>
+    <button class="btn btn-outline-primary me-2" (click)="goBack()">
+      <ion-icon name="chevron-back-outline" class="align-middle"></ion-icon>
+    </button>
+
+    <ion-title size="medium"> {{ 'global.details' | translate }} </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">task-details</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="container mt-1 p-3 px-4">
+    <div class="row">
+      <span class="h3 mb-0"><b>{{ task.title }}</b></span>
+      <span class="text-muted">{{ task.code }}</span>
+      <div>
+        <span class="badge bg-{{ task.priority }}">{{ task.priority | titlecase }}</span>
+        <span class="badge ms-2" [ngStyle]="task.status?.styles">{{task.status?.title}}</span>
+        <span class="badge ms-2" *ngFor="let label of task.labels" [ngStyle]="label?.styles">{{label?.title}}</span>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-7">
+        <button class="btn mt-1 ms-2 w-100" [ngClass]="{ 'btn-primary ': task.is_clockIn, 'btn-secondary ': !task.is_clockIn }" id="timerTask">
+          {{ timer }}
+        </button>
+      </div>
+      <div class="col-5">
+        <ng-container *ngIf="task.is_clockIn">
+          <button class="btn btn-outline-secondary mt-1" (click)="clockOut(task)">
+            <i class="bx bx-stop-circle align-middle"></i> <span> {{ 'clock_out' | translate }}</span>
+          </button>
+        </ng-container>
+        <ng-container *ngIf="!task.is_clockIn">
+          <button class="btn btn-outline-secondary mt-1" (click)="clockIn(task)">
+            <i class="bx bx-play-circle align-middle"></i> <span> {{ 'clock_in' | translate }}</span>
+          </button>
+        </ng-container>
+      </div>
+    </div>
+    <hr />
+    <div class="row my-4">
+      <h4><b>{{ 'tasks.description' | translate }}</b></h4>
+      <p class="text-muted">
+        {{ task.description == '' ? ('tasks.no_description' | translate) : task.description }}
+      </p>
+    </div>
+    <div class="row mb-4">
+      <div class="col-6">
+        <h4><b>{{ 'tasks.assigned_to' | translate }}</b></h4>
+        <div class="d-flex align-items-center">
+          <div class="avatar-group">
+            <div *ngFor="let user of task.users ?? []" class="avatar avatar-s">
+              <img [src]="user.profile_img" alt="avatar" class="rounded-circle">
+            </div>
+            <div *ngIf="task.users && task.users.length > 3" class="avatar avatar-s">
+              <div class="avatar-name rounded-circle">
+                <span>+{{ task.users.length - 3 }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <h4><b>{{ 'tasks.due_date' | translate }}</b></h4>
+        <p [ngClass]="{ 'text-danger': task.is_overdue, 'text-muted': !task.is_overdue }">
+          {{ (task.duedate | date: 'dd/MM/yyyy') ?? '-' }}
+        </p>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <h4>
+        <b><i class="bx bx-file"></i> {{ 'tasks.files' | translate }}</b>
+      </h4>
+
+      <div class="row border-bottom p-3" *ngFor="let file of task.files">
+        <div class="col-md-10 col-9">
+          <p class="mt-1 mb-1">
+            <i class="{{ file.icon }} text-muted"></i>
+            {{ file.title }}
+          </p>
+          <p class="text-muted" style="font-size: 14px">
+            {{ file.user.name }} | {{ file.created_at | date: 'dd/MM/yyyy' }}
+          </p>
+
+          <img
+            src="{{ file.path }}"
+            class="img-fluid"
+            alt="{{ file.title }}"
+            style="max-width: 250px"
+          /><br>
+          <span class="text-muted" style="font-size: 14px">{{ file.real_size }}</span>
+        </div>
+        <div class="col-md-2 col-3">
+          <div class="col-md-2 text-end">
+            <div class="dropdown">
+              <button
+                class="btn btn-options"
+                type="button"
+                id="dropdownMenuButton"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="bx bx-dots-horizontal-rounded"></i>
+              </button>
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="dropdownMenuButton"
+              >
+                <li><a class="dropdown-item" href="{{ file.download_link }}"><i class='bx bxs-download' ></i> {{ 'global.download' | translate }}</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center p-3" *ngIf="task.files && task.files.length == 0">
+        <p class="text-muted">{{ 'tasks.no_files' | translate }}!</p>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <h4>
+        <b><i class="bx bx-chat"></i> {{ 'tasks.comments' | translate }}</b>
+      </h4>
+
+      <div class="col-md-12 mt-2">
+        <form (ngSubmit)="submitComment(form)" #form="ngForm">
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              class="form-control"
+              name="comment"
+              placeholder="{{ 'tasks.comments' | translate }}"
+              aria-label="Add a comment"
+              aria-describedby="button-addon2"
+              ngModel
+              required
+            />
+            <button class="btn btn-primary" type="submit" id="button-addon2" [disabled]="form.value.comment == ''">
+              <i class="bx bx-send"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 border">
+        <div class="row p-3 border-bottom" *ngFor="let comment of task.comments">
+          <div class="col-2">
+            <img
+              src="{{ comment.user.profile_img }}"
+              class="rounded-circle"
+              width="45"
+              height="45"
+              alt="Profile"
+              style="width: 50px; height: 45px;"
+            />
+          </div>
+          <div class="col-8">
+            <p class="h6">{{ comment.user.name }}</p>
+            <p class="text-muted">{{ comment.text }}</p>
+          </div>
+          <div class="col-2">
+            <div class="dropdown">
+              <button
+                class="btn btn-options"
+                type="button"
+                id="dropdownMenuButton"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="bx bx-dots-horizontal-rounded"></i>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li>
+                  <button class="dropdown-item text-danger" (click)="removeComment(comment.id)">
+                    <i class="bx bx-trash"></i> {{ 'global.delete' | translate }}
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="text-center p-3" *ngIf="task.comments && task.comments.length == 0">
+          <p class="text-muted">{{ 'tasks.no_comments' | translate }}!</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>

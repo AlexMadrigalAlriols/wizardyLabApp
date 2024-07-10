@@ -31,8 +31,17 @@
                 "output": "./svg"
               }
             ],
-            "styles": ["src/global.scss", "src/theme/variables.scss", "node_modules/bootstrap/dist/css/bootstrap.min.css"],
-            "scripts": []
+            "styles": [
+              "src/global.scss",
+              "src/theme/variables.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/flatpickr/dist/flatpickr.min.css",
+              "node_modules/select2/dist/css/select2.css"
+          ],
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "node_modules/flatpickr/dist/flatpickr.js"
+            ]
           },
           "configurations": {
             "production": {

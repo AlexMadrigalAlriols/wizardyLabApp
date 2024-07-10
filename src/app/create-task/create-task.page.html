@@ -1,0 +1,131 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="py-2">
+      <button class="btn btn-outline-primary me-2" (click)="goBack()">
+        <ion-icon name="chevron-back-outline" class="align-middle"></ion-icon>
+      </button>
+
+      <ion-title size="medium">{{ isEditing ? 'global.edit_task' : 'global.create_task' | translate | uppercase }}</ion-title>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container my-4 px-4">
+  <form (ngSubmit)="onSubmit(form)" #form="ngForm" id="form">
+    <div class="row">
+      <div class="form-floating mt-3">
+        <input type="text" class="form-control" id="title" ngModel name="title" placeholder="{{ 'tasks.title' | translate }}" value="" maxlength="50">
+        <label for="title">{{ 'tasks.title' | translate }} <span class="text-danger">*</span></label>
+      </div>
+
+      <div class="mt-0 text-end">
+          <span class="text-muted"><span id="titleCountChar">{{ form.value.title ? form.value.title.length : 0 }}</span>/50</span>
+      </div>
+    </div>
+    <div class="row mt-1">
+      <div class="form-floating select2-label mt-3">
+        <select class="form-select select2 w-100" ngModel id="project" name="project" aria-label="Project" #projectSelect>
+          <option value="">--</option>
+          <option value="{{project.id}}" *ngFor="let project of projects">{{project.name}}</option>
+        </select>
+        <label for="project">{{ 'tasks.project' | translate }}</label>
+      </div>
+    </div>
+    <div class="row mt-1">
+      <div class="form-floating mt-3">
+        <input type="text" class="form-control flatpicker" ngModel id="start_date" name="start_date" placeholder="{{ 'tasks.start_date' | translate }}" value="" placeholder="dd/mm/yyyy">
+        <label for="start_date">{{ 'tasks.start_date' | translate }}</label>
+      </div>
+    </div>
+    <div class="row mt-1">
+      <div class="form-floating mt-3">
+        <input type="text" class="form-control flatpicker" ngModel id="due_date" name="due_date" placeholder="{{ 'tasks.due_date' | translate }}" value="" placeholder="dd/mm/yyyy">
+        <label for="due_date">{{ 'tasks.due_date' | translate }}</label>
+      </div>
+    </div>
+    <div class="row mt-1">
+      <div class="form-floating mt-3">
+        <input type="number" class="form-control" ngModel id="limit_hours" name="limit_hours" placeholder="{{ 'tasks.hour_limit' | translate }}" value="">
+        <label for="limit_hours">{{ 'tasks.hour_limit' | translate }}</label>
+      </div>
+    </div>
+    <div class="row mt-1">
+      <div class="form-floating select2-label mt-3">
+        <select class="form-select select2 w-100" id="assigned_users" multiple name="assigned_users[]" aria-label="Users" #userSelect>
+          <option value="{{ a_user.id }}" [selected]="a_user.id == user.id" *ngFor="let a_user of users">{{ a_user.name }}</option>
+        </select>
+        <label for="assigned_users">{{ 'tasks.assigned_to' | translate }}</label>
+      </div>
+    </div>
+    <div class="row mt-1">
+      <div class="form-floating select2-label mt-3">
+        <select class="form-select select2 w-100" id="departments" multiple name="departments[]" aria-label="Departments" #departmentSelect>
+          <option value="{{department.id}}" *ngFor="let department of departments">{{department.name}}</option>
+        </select>
+        <label for="departments">{{ 'tasks.department' | translate }}</label>
+      </div>
+    </div>
+    <div class="row mt-1">
+      <div class="form-floating mt-3">
+        <textarea class="form-control" ngModel id="description" maxlength="500" name="description" placeholder="{{ 'tasks.description' | translate }}" rows="5" style="min-height: 125px;"></textarea>
+        <label for="description">{{ 'tasks.description' | translate }}</label>
+      </div>
+      <div class="mt-0 text-end">
+          <span class="text-muted"><span id="descriptionCountChar">{{ form.value.description ? form.value.description.length : 0 }}</span>/500</span>
+      </div>
+    </div>
+    <div class="row mt-1">
+      <div class="form-floating mt-3">
+        <select class="form-select w-100" [ngModel]="'low'" id="priority" name="priority" aria-label="Priority">
+            <option value="{{priority.id}}" *ngFor="let priority of priorities">{{priority.id | titlecase }}</option>
+        </select>
+        <label for="priority">{{ 'tasks.priority' | translate }} <span class="text-danger">*</span></label>
+      </div>
+    </div>
+    <div class="row mt-1">
+      <div class="form-floating select2-label mt-3">
+        <select class="form-select select2 w-100" ngModel id="parent_task" name="parent_task" aria-label="Parent Task" #taskSelect>
+          <option value=""></option>
+          <option value="{{p_task.id}}" *ngFor="let p_task of tasks">{{p_task.title}}</option>
+        </select>
+        <label for="parent_task">{{ 'tasks.parent_task' | translate }}</label>
+      </div>
+    </div>
+    <div class="row mt-1">
+      <div class="form-floating select2-label mt-3">
+        <select class="form-select select2 w-100" [(ngModel)]="selectedStatus" id="status" name="status" aria-label="Status" #statusSelect>
+          <option value="{{status.id}}" *ngFor="let status of statuses">{{status.title}}</option>
+        </select>
+        <label for="status">{{ 'tasks.status' | translate }} <span class="text-danger">*</span></label>
+      </div>
+    </div>
+    <div class="row mt-1">
+      <div class="form-floating select2-label mt-3">
+        <select class="form-select select2 w-100" id="tags" multiple name="tags[]" aria-label="Tags" #tagsSelect>
+          <option value="{{tag.id}}" *ngFor="let tag of tags">{{tag.title}}</option>
+        </select>
+        <label for="tags">{{ 'tasks.tags' | translate }}</label>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <h4><i class='bx bx-file'></i> {{ 'tasks.files' | translate }}</h4>
+      <input type="file" class="form-control" multiple>
+    </div>
+  </form>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="row p-2">
+      <div class="col-6">
+        <button class="btn btn-outline-primary w-100" (click)="goBack()">{{ 'global.cancel' | translate }}</button>
+      </div>
+      <div class="col-6">
+        <button class="btn btn-primary w-100" (click)="onSubmit(form)" [disabled]="form.value.title == ''">{{ 'global.create_task' | translate }}</button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-footer>

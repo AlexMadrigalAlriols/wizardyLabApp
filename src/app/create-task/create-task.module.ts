@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { TaskDetailsPageRoutingModule } from './task-details-routing.module';
+import { CreateTaskPageRoutingModule } from './create-task-routing.module';
 
-import { TaskDetailsPage } from './task-details.page';
+import { CreateTaskPage } from './create-task.page';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     FormsModule,
     IonicModule,
-    TaskDetailsPageRoutingModule,
+    CreateTaskPageRoutingModule,
     TranslateModule
   ],
-  declarations: [TaskDetailsPage]
+  declarations: [CreateTaskPage]
 })
-export class TaskDetailsPageModule {}
+export class CreateTaskPageModule {}

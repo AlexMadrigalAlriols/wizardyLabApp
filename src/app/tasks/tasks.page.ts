@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { TasksService } from '../-services/tasks.service';
 import { FrameworkService } from '../-services/framework.service';
@@ -45,6 +45,7 @@ export class TasksPage {
   }
 
   async ngOnInit() {
+    console.log('TasksPage');
     const loading = this.loadingController.create();
     loading.then(loadingElement => {
       loadingElement.present();
@@ -225,7 +226,11 @@ export class TasksPage {
   }
 
   goToTaskDetail(taskId: string) {
-    this.router.navigate(['/task-detail', taskId]);
+    this.router.navigate(['/tabs/task', taskId]);
+  }
+
+  createTask() {
+    this.router.navigate(['/tabs/create-task']);
   }
 
   range(start: number, end: number): number[] {

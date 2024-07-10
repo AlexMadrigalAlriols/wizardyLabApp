@@ -8,12 +8,17 @@
     "search": "Search",
     "submit": "Submit",
     "confirm": "Confirm",
+    "download": "Download",
     "yes": "Yes",
     "no": "No",
     "ok": "OK",
     "loading": "Loading...",
     "loadingData": "Loading data...",
-    "loadingError": "Error loading data"
+    "loadingError": "Error loading data",
+    "of": "of",
+    "to": "to",
+    "details": "Details",
+    "create_task": "Create Task"
   },
   "tabs": {
     "attendance": "Attendance",
@@ -27,5 +32,28 @@
   "break_time": "Break Time",
   "hours": "Hours",
   "working_time": "Working Time",
-  "ubication_pin_message": "You are here"
+  "ubication_pin_message": "You are here",
+  "tasks": {
+    "title": "Title",
+    "project": "Project",
+    "description": "Description",
+    "status": "Status",
+    "priority": "Priority",
+    "parent_task": "Parent Task",
+    "start_date": "Start Date",
+    "due_date": "Due Date",
+    "hours_logged": "Hours Logged",
+    "hour_limit": "Hour Limit",
+    "assigned_to": "Assigned To",
+    "department": "Departament",
+    "created_at": "Created At",
+    "updated_at": "Updated At",
+    "not_found": "No tasks found",
+    "comments": "Comments",
+    "no_comments": "No comments",
+    "files": "Files",
+    "tags": "Tags",
+    "no_files": "No files",
+    "no_description": "No description"
+  }
 }

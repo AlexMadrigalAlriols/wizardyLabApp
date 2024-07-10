@@ -42,7 +42,14 @@ export class FrameworkService {
     return this.http.put(`${baseUrl}/${url}`, body)
   }
 
-  delete(url: string, body: any) {
-    return this.http.delete(`${baseUrl}/${url}`, body)
+  delete(url: string, body: any, auth: boolean = true) {
+    if(auth) {
+      headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      });
+    }
+
+    return this.http.delete(`${baseUrl}/${url}`, {headers: headers})
   }
 }

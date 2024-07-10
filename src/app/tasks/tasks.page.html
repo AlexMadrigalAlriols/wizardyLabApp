@@ -3,10 +3,10 @@
     <ion-toolbar>
       <div class="row">
         <div class="col-9">
-          <ion-title size="large"><ion-icon aria-hidden="true" name="reader-outline" class="align-middle"></ion-icon> Tasks <span class="text-muted">({{tasks.length}})</span></ion-title>
+          <ion-title size="large"><ion-icon aria-hidden="true" name="reader-outline" class="align-middle"></ion-icon> {{ 'tabs.tasks' | translate}} <span class="text-muted">({{tasks.length}})</span></ion-title>
         </div>
         <div class="col-3 text-end mt-1">
-          <button class="btn btn-primary me-3 mt-1">+</button>
+          <button class="btn btn-primary me-3 mt-1" (click)="createTask()"><i class='bx bx-plus-medical' ></i></button>
         </div>
       </div>
     </ion-toolbar>
@@ -16,24 +16,24 @@
     <div class="search-container w-100 mt-3">
       <i class="bx bx-search search-icon"></i>
       <input type="text" class="search-input" id="search-input" name="search_input"
-          placeholder="Search Tasks" (input)="searchTasks($event)">
+          placeholder="{{ 'global.search' | translate}} {{ 'tabs.tasks' | translate}}" (input)="searchTasks($event)">
     </div>
     <div class="table-responsive mt-3 datatable">
       <table class="table table-borderless table-hover">
         <thead class="border-top border-bottom">
           <tr>
             <th scope="col" class="min-width-0"></th>
-            <th scope="col" class="title-column">Title</th>
-            <th scope="col">Assigned To</th>
-            <th scope="col">Due Date</th>
-            <th scope="col">Status</th>
-            <th scope="col">Priority</th>
-            <th scope="col">Hours Logged</th>
+            <th scope="col" class="title-column">{{ 'tasks.title' | translate}}</th>
+            <th scope="col">{{ 'tasks.assigned_to' | translate}}</th>
+            <th scope="col">{{ 'tasks.due_date' | translate}}</th>
+            <th scope="col">{{ 'tasks.status' | translate}}</th>
+            <th scope="col">{{ 'tasks.priority' | translate}}</th>
+            <th scope="col">{{ 'tasks.hours_logged' | translate}}</th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngFor="let task of tasks" >
+          <ng-container *ngFor="let task of tasks">
             <tr class="table-entry align-middle border-bottom task-{{task.id}}">
               <td class="text-nowrap">
                 <ng-container *ngIf="task.subtasks.length">
@@ -92,9 +92,22 @@
               </td>
               <td class="text-center">
                 <div class="dropdown">
-                  <button class="btn btn-options" type="button">
+                  <button
+                    class="btn btn-options"
+                    type="button"
+                    id="dropdownMenuButton-{{task.id}}"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
                     <i class="bx bx-dots-horizontal-rounded"></i>
                   </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li>
+                      <button class="dropdown-item text-danger">
+                        <i class="bx bx-trash"></i> {{ 'global.delete' | translate }}
+                      </button>
+                    </li>
+                  </ul>
                 </div>
               </td>
             </tr>
@@ -135,8 +148,11 @@
                 </td>
                 <td>
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm dropdown-toggle" [ngStyle]="subtask.status.styles">
+                    <button type="button" class="btn btn-sm dropdown-toggle" [ngStyle]="subtask.status.styles" data-bs-toggle="dropdown" aria-expanded="false">
                       <b>{{ subtask.status.title }}</b>
+                      <ul class="dropdown-menu dropdown-menu-sm">
+                        <li class="border-top"*ngFor="let status of statuses"><a class="dropdown-item" (click)="changeStatus(subtask, status)"><span class="badge" [ngStyle]="status.styles">{{status.title}}</span></a></li>
+                      </ul>
                     </button>
                   </div>
                 </td>
@@ -160,7 +176,7 @@
 
           <tr *ngIf="tasks.length === 0">
             <td colspan="9" class="text-center py-5">
-              <h5>No tasks found</h5>
+              <h5>{{ 'tasks.not_found' | translate}}</h5>
             </td>
           </tr>
         </tbody>
@@ -168,7 +184,7 @@
     </div>
     <div class="row mt-3">
       <div class="col-6">
-        <span>{{ tasks.length }} to {{ pagination.take ?? 10 }} tasks of <b>{{ pagination.total }}</b></span>
+        <span>{{ tasks.length }} {{ 'global.to' | translate}} {{ pagination.take ?? 10 }} {{ 'tabs.tasks' | translate}} {{ 'global.of' | translate}} <b>{{ pagination.total }}</b></span>
       </div>
       <div class="col-6">
         <nav aria-label="Page navigation example">

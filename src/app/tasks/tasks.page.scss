@@ -45,60 +45,6 @@ table.dataTable tbody th.select-checkbox::after {
     background-color: var(--primary-color) !important;
 }
 
-
-.avatar-group {
-  display: flex;
-  flex-wrap: nowrap;
-}
-
-.avatar-s {
-  height: 2rem;
-  width: 2rem;
-}
-
-.avatar {
-  position: relative;
-  display: block;
-}
-
-.avatar img {
-  object-fit: cover;
-}
-
-.avatar img,
-.avatar .avatar-name {
-  width: 100%;
-  height: 100%;
-}
-
-.avatar img {
-  display: block;
-}
-
-.avatar-group .avatar-s:not(:first-child),
-.avatar-group .avatar-m:not(:first-child),
-.avatar-group .avatar-l:not(:first-child),
-.avatar-group .avatar-xl:not(:first-child),
-.avatar-group .avatar-2xl:not(:first-child),
-.avatar-group .dropdown:not(:first-child) {
-  margin-left: -0.5rem;
-}
-
-.avatar-s .avatar-name {
-  font-size: 0.7894736842rem;
-  line-height: 1.2;
-}
-
-.avatar .avatar-name {
-  color: var(--primary-color);
-  background-color: #e5edff;
-  font-weight: bold;
-  text-transform: uppercase;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .title-column {
   min-width: 10rem; /* Ajusta el valor según sea necesario */
 }
@@ -136,21 +82,6 @@ table.dataTable tbody th.select-checkbox::after {
   transform: translateY(-50%);
   color: #999;
   font-size: 22px;
-}
-
-.badge.bg-low {
-  background-color: #f8d745;
-  color: #ffffff;
-}
-
-.badge.bg-medium {
-  background-color: #f8a745;
-  color: #ffffff;
-}
-
-.badge.bg-high {
-  background-color: #f84545;
-  color: #ffffff;
 }
 
 .page-item {

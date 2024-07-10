@@ -8,12 +8,17 @@
     "search": "Buscar",
     "submit": "Enviar",
     "confirm": "Confirmar",
+    "download": "Descargar",
     "yes": "Sí",
     "no": "No",
     "ok": "Aceptar",
     "loading": "Cargando...",
     "loadingData": "Cargando datos...",
-    "loadingError": "Error al cargar datos"
+    "loadingError": "Error al cargar datos",
+    "of": "de",
+    "to": "de",
+    "details": "Detalles",
+    "create_task": "Crear tarea"
   },
   "tabs": {
     "attendance": "Asistencia",
@@ -33,5 +38,28 @@
   "break_time": "Tiempo de descanso",
   "hours": "Horas",
   "working_time": "Tiempo de trabajo",
-  "ubication_pin_message": "Estás aquí"
+  "ubication_pin_message": "Estás aquí",
+  "tasks": {
+    "title": "Titulo",
+    "project": "Proyecto",
+    "description": "Descripción",
+    "status": "Estado",
+    "priority": "Prioridad",
+    "parent_task": "Tarea padre",
+    "start_date": "Fecha de inicio",
+    "due_date": "Fecha de entrega",
+    "hours_logged": "Horas registradas",
+    "hour_limit": "Límite de horas",
+    "department": "Departamento",
+    "assigned_to": "Asignado a",
+    "created_at": "Creado el",
+    "updated_at": "Actualizado el",
+    "not_found": "No se encontraron tareas",
+    "comments": "Comentarios",
+    "no_comments": "No hay comentarios",
+    "files": "Archivos",
+    "tags": "Tags",
+    "no_files": "No hay archivos",
+    "no_description": "Sin descripción"
+  }
 }
