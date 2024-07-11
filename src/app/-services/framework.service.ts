@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { AuthService } from './auth.service';
 
-const baseUrl = 'https://wizardylab.test/api';
+const baseUrl = 'https://wiz.wizardylab.com/api';
 let headers = new HttpHeaders({
   'Content-Type': 'application/json',
   'Access-Control-Allow-Origin': '*',
