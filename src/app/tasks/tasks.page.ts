@@ -107,7 +107,7 @@ export class TasksPage {
   }
 
   editTask(taskId: number) {
-    this.router.navigate(['/tabs/edit-task', taskId]);
+    this.router.navigate(['/edit-task', taskId]);
   }
 
   async getTasks(loading: Promise<HTMLIonLoadingElement>, page: number = 1, search: string = '') {
@@ -254,7 +254,7 @@ export class TasksPage {
   }
 
   createTask() {
-    this.router.navigate(['/tabs/create-task']);
+    this.router.navigate(['/create-task']);
   }
 
   range(start: number, end: number): number[] {

@@ -29,6 +29,12 @@
     "notes": "Notes",
     "logout": "Logout"
   },
+  "errors": {
+    "clock_in": "Error clocking in",
+    "clock_out": "Error clocking out"
+  },
+  "clock_in_success": "Clock in successful",
+  "clock_out_success": "Clock out successful",
   "clock_in": "Clock In",
   "clock_out": "Clock Out",
   "estimated_hours": "Estimated Hours",
@@ -47,8 +53,8 @@
     "due_date": "Due Date",
     "hours_logged": "Hours Logged",
     "hour_limit": "Hour Limit",
+    "department": "Department",
     "assigned_to": "Assigned To",
-    "department": "Departament",
     "created_at": "Created At",
     "updated_at": "Updated At",
     "not_found": "No tasks found",

@@ -20,18 +20,6 @@ const routes: Routes = [
         loadChildren: () => import('../task-details/task-details.module').then(m => m.TaskDetailsPageModule)
       },
       {
-        path: 'create-task',
-        loadChildren: () => import('../create-task/create-task.module').then(m => m.CreateTaskPageModule)
-      },
-      {
-        path: 'edit-task/:id',
-        loadChildren: () => import('../create-task/create-task.module').then(m => m.CreateTaskPageModule)
-      },
-      {
-        path: 'tab3',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
-      },
-      {
         path: '',
         redirectTo: '/tabs/attendance',
         pathMatch: 'full'

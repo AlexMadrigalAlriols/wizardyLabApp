@@ -1,10 +1,14 @@
 <ion-header>
   <ion-toolbar>
-    <button class="btn btn-outline-primary me-2" (click)="goBack()">
-      <ion-icon name="chevron-back-outline" class="align-middle"></ion-icon>
-    </button>
+    <div class="row p-2 align-items-center">
+      <div class="col-12 text-start">
+        <button class="btn btn-outline-primary me-2" (click)="goBack()">
+          <ion-icon name="chevron-back-outline" class="align-middle"></ion-icon>
+        </button>
 
-    <ion-title size="medium"> {{ 'global.details' | translate }} </ion-title>
+        <span class="h2 align-middle ms-4"><b>Details</b></span>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 

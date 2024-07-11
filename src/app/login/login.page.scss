@@ -75,11 +75,12 @@ body {
 }
 .input-div {
 	position: relative;
-    display: grid;
-    grid-template-columns: 7% 93%;
-    padding: 5px 0 !important;
-    border-bottom: 2px solid #d9d9d9;
-    margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 7% 93%;
+  padding: 5px 0 !important;
+  border-bottom: 2px solid #d9d9d9;
+  margin-top: 1rem;
+  background-color: rgba(255, 255, 255, 0.712);
 }
 .input-div.error {
     border-bottom: 2px solid red;

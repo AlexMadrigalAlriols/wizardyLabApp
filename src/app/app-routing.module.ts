@@ -13,6 +13,14 @@ const routes: Routes = [
     }
   },
   {
+    path: 'create-task',
+    loadChildren: () => import('./create-task/create-task.module').then(m => m.CreateTaskPageModule)
+  },
+  {
+    path: 'edit-task/:id',
+    loadChildren: () => import('./create-task/create-task.module').then(m => m.CreateTaskPageModule)
+  },
+  {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   }

@@ -32,8 +32,7 @@ export class ThemeService {
     document.documentElement.style.setProperty('--secondary-color', colors.secondary_color);
     document.documentElement.style.setProperty('--primary-light-color', colors.primary_light_color);
     document.documentElement.style.setProperty('--secondary-light-color', colors.secondary_light_color);
-    document.documentElement.style.setProperty('--btn-txt', colors.secondary_light_color);
-    document.documentElement.style.setProperty('--secondary-light-color', colors.btn_text_color);
+    document.documentElement.style.setProperty('--btn-txt', colors.btn_text_color);
     document.documentElement.style.setProperty('--menu-txt-color', colors.menu_text_color);
   }
 }
