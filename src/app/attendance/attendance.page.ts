@@ -90,6 +90,33 @@ export class AttendancePage implements OnInit {
     this.isModalOpen = false;
   }
 
+  refresh(event: any) {
+    setTimeout(() => {
+      this.authService.getPortal().then(() => {
+        this.user = JSON.parse(localStorage.getItem('user') ?? '{}');
+        let portal = JSON.parse(localStorage.getItem('portal') ?? '{}');
+
+        this.timer = this.user.timer;
+        this.primary_color = portal.data.primary_color;
+        if(this.user.is_clockIn) {
+          this.timerService.startTimer(this.timer);
+          this.timerSubscription = this.timerService.getCurrentTime().subscribe(time => {
+            this.timer = time;
+          });
+        } else {
+          this.timerService.stopTimer();
+          this.timerSubscription?.unsubscribe();
+          this.user.is_clockIn = false;
+        }
+      },
+      error => {
+        this.authService.logout();
+      });
+
+      event.target.complete();
+    }, 1000);
+  }
+
   clockIn() {
     const loading = this.loadingController.create();
     loading.then(loadingElement => {

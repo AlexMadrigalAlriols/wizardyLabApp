@@ -12,6 +12,10 @@
     </ion-toolbar>
   </ion-header>
 
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <div class="container">
     <div class="search-container w-100 mt-3">
       <i class="bx bx-search search-icon"></i>

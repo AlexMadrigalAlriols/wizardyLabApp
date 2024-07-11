@@ -46,7 +46,6 @@ export class TasksPage {
   }
 
   async ngOnInit() {
-    console.log('TasksPage');
     const loading = this.loadingController.create();
     loading.then(loadingElement => {
       loadingElement.present();
@@ -57,6 +56,14 @@ export class TasksPage {
     document.querySelectorAll('.dropdown-toggle').forEach(dropdownToggleEl => {
       new bootstrap.Dropdown(dropdownToggleEl);
     });
+  }
+
+  refresh(event: any) {
+    const loading = this.loadingController.create();
+    setTimeout(() => {
+      this.getTasks(loading);
+      event.target.complete();
+    }, 1000);
   }
 
   toggleSubTasks(e: Event, task: any) {

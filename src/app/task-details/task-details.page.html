@@ -12,7 +12,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+  <ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <div class="container mt-1 p-3 px-4">
     <div class="row">
       <span class="h3 mb-0"><b>{{ task.title }}</b></span>

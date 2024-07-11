@@ -128,6 +128,14 @@ export class TaskDetailsPage implements OnInit {
     });
   }
 
+  refresh(event: any) {
+    setTimeout(() => {
+      this.getTask(new Promise<HTMLIonLoadingElement>((resolve, reject) => {}));
+
+      event.target.complete();
+    }, 1000);
+  }
+
   clockIn(task: any) {
     const loading = this.loadingController.create();
     loading.then(loadingElement => {
