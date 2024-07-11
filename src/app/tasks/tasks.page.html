@@ -103,7 +103,18 @@
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <li>
-                      <button class="dropdown-item text-danger">
+                      <button class="dropdown-item" (click)="editTask(task.id)">
+                        <i class="bx bx-edit"></i> {{ 'global.edit' | translate }}
+                      </button>
+                    </li>
+                    <li>
+                      <button class="dropdown-item" (click)="archiveTask(task.id)">
+                        <i class='bx bx-box' ></i> {{ 'global.archive' | translate }}
+                      </button>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                      <button class="dropdown-item text-danger" (click)="deleteTask(task.id)">
                         <i class="bx bx-trash"></i> {{ 'global.delete' | translate }}
                       </button>
                     </li>

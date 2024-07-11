@@ -38,8 +38,15 @@ export class FrameworkService {
     return this.http.post(`${baseUrl}/${url}`, body, {headers: headers})
   }
 
-  put(url: string, body: any) {
-    return this.http.put(`${baseUrl}/${url}`, body)
+  put(url: string, body: any, auth: boolean = true) {
+    if(auth) {
+      headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      });
+    }
+
+    return this.http.put(`${baseUrl}/${url}`, body, {headers: headers})
   }
 
   delete(url: string, body: any, auth: boolean = true) {

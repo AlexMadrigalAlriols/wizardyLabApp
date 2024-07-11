@@ -5,7 +5,7 @@
         <ion-icon name="chevron-back-outline" class="align-middle"></ion-icon>
       </button>
 
-      <ion-title size="medium">{{ isEditing ? 'global.edit_task' : 'global.create_task' | translate | uppercase }}</ion-title>
+      <ion-title size="medium">{{ (isEditing ? 'global.edit_task' : 'global.create_task') | translate | uppercase }}</ion-title>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -15,7 +15,7 @@
   <form (ngSubmit)="onSubmit(form)" #form="ngForm" id="form">
     <div class="row">
       <div class="form-floating mt-3">
-        <input type="text" class="form-control" id="title" ngModel name="title" placeholder="{{ 'tasks.title' | translate }}" value="" maxlength="50">
+        <input type="text" class="form-control" id="title" [(ngModel)]="task.title" name="title" placeholder="{{ 'tasks.title' | translate }}" value="" maxlength="50">
         <label for="title">{{ 'tasks.title' | translate }} <span class="text-danger">*</span></label>
       </div>
 
@@ -25,35 +25,35 @@
     </div>
     <div class="row mt-1">
       <div class="form-floating select2-label mt-3">
-        <select class="form-select select2 w-100" ngModel id="project" name="project" aria-label="Project" #projectSelect>
+        <select class="form-select select2 w-100" id="project" name="project" aria-label="Project" #projectSelect>
           <option value="">--</option>
-          <option value="{{project.id}}" *ngFor="let project of projects">{{project.name}}</option>
+          <option value="{{project.id}}" [selected]="task.project && task.project?.id && task.project.id == project.id ? true : false" *ngFor="let project of projects">{{project.name}}</option>
         </select>
         <label for="project">{{ 'tasks.project' | translate }}</label>
       </div>
     </div>
     <div class="row mt-1">
       <div class="form-floating mt-3">
-        <input type="text" class="form-control flatpicker" ngModel id="start_date" name="start_date" placeholder="{{ 'tasks.start_date' | translate }}" value="" placeholder="dd/mm/yyyy">
+        <input type="date" class="form-control flatpicker" ngModel id="start_date" name="start_date" placeholder="{{ 'tasks.start_date' | translate }}" value="{{task.start_date}}" placeholder="dd/mm/yyyy">
         <label for="start_date">{{ 'tasks.start_date' | translate }}</label>
       </div>
     </div>
     <div class="row mt-1">
       <div class="form-floating mt-3">
-        <input type="text" class="form-control flatpicker" ngModel id="due_date" name="due_date" placeholder="{{ 'tasks.due_date' | translate }}" value="" placeholder="dd/mm/yyyy">
+        <input type="date" class="form-control flatpicker" ngModel id="due_date" name="due_date" placeholder="{{ 'tasks.due_date' | translate }}" value="{{task.duedate}}" placeholder="dd/mm/yyyy">
         <label for="due_date">{{ 'tasks.due_date' | translate }}</label>
       </div>
     </div>
     <div class="row mt-1">
       <div class="form-floating mt-3">
-        <input type="number" class="form-control" ngModel id="limit_hours" name="limit_hours" placeholder="{{ 'tasks.hour_limit' | translate }}" value="">
+        <input type="number" class="form-control" [(ngModel)]="task.limit_hours" id="limit_hours" name="limit_hours" placeholder="{{ 'tasks.hour_limit' | translate }}">
         <label for="limit_hours">{{ 'tasks.hour_limit' | translate }}</label>
       </div>
     </div>
     <div class="row mt-1">
       <div class="form-floating select2-label mt-3">
         <select class="form-select select2 w-100" id="assigned_users" multiple name="assigned_users[]" aria-label="Users" #userSelect>
-          <option value="{{ a_user.id }}" [selected]="a_user.id == user.id" *ngFor="let a_user of users">{{ a_user.name }}</option>
+          <option value="{{ a_user.id }}" [selected]="selectedUsers.includes(a_user.id)" *ngFor="let a_user of users">{{ a_user.name }}</option>
         </select>
         <label for="assigned_users">{{ 'tasks.assigned_to' | translate }}</label>
       </div>
@@ -68,7 +68,7 @@
     </div>
     <div class="row mt-1">
       <div class="form-floating mt-3">
-        <textarea class="form-control" ngModel id="description" maxlength="500" name="description" placeholder="{{ 'tasks.description' | translate }}" rows="5" style="min-height: 125px;"></textarea>
+        <textarea class="form-control" [(ngModel)]="task.description" id="description" maxlength="500" name="description" placeholder="{{ 'tasks.description' | translate }}" rows="5" style="min-height: 125px;"></textarea>
         <label for="description">{{ 'tasks.description' | translate }}</label>
       </div>
       <div class="mt-0 text-end">
@@ -77,7 +77,7 @@
     </div>
     <div class="row mt-1">
       <div class="form-floating mt-3">
-        <select class="form-select w-100" [ngModel]="'low'" id="priority" name="priority" aria-label="Priority">
+        <select class="form-select w-100" [(ngModel)]="task.priority" id="priority" name="priority" aria-label="Priority">
             <option value="{{priority.id}}" *ngFor="let priority of priorities">{{priority.id | titlecase }}</option>
         </select>
         <label for="priority">{{ 'tasks.priority' | translate }} <span class="text-danger">*</span></label>
@@ -85,9 +85,9 @@
     </div>
     <div class="row mt-1">
       <div class="form-floating select2-label mt-3">
-        <select class="form-select select2 w-100" ngModel id="parent_task" name="parent_task" aria-label="Parent Task" #taskSelect>
+        <select class="form-select select2 w-100" id="parent_task" name="parent_task" aria-label="Parent Task" #taskSelect>
           <option value=""></option>
-          <option value="{{p_task.id}}" *ngFor="let p_task of tasks">{{p_task.title}}</option>
+          <option value="{{p_task.id}}" [selected]="task.task_id == p_task.id ? true : false" *ngFor="let p_task of tasks">{{p_task.title}}</option>
         </select>
         <label for="parent_task">{{ 'tasks.parent_task' | translate }}</label>
       </div>
@@ -103,7 +103,7 @@
     <div class="row mt-1">
       <div class="form-floating select2-label mt-3">
         <select class="form-select select2 w-100" id="tags" multiple name="tags[]" aria-label="Tags" #tagsSelect>
-          <option value="{{tag.id}}" *ngFor="let tag of tags">{{tag.title}}</option>
+          <option value="{{tag.id}}" [selected]="selectedTags.includes(tag.id)" *ngFor="let tag of tags">{{tag.title}}</option>
         </select>
         <label for="tags">{{ 'tasks.tags' | translate }}</label>
       </div>
@@ -111,7 +111,7 @@
 
     <div class="row mt-4">
       <h4><i class='bx bx-file'></i> {{ 'tasks.files' | translate }}</h4>
-      <input type="file" class="form-control" multiple>
+      <input type="file" class="form-control" (change)="onFileChange($event)" multiple>
     </div>
   </form>
   </div>
@@ -124,7 +124,7 @@
         <button class="btn btn-outline-primary w-100" (click)="goBack()">{{ 'global.cancel' | translate }}</button>
       </div>
       <div class="col-6">
-        <button class="btn btn-primary w-100" (click)="onSubmit(form)" [disabled]="form.value.title == ''">{{ 'global.create_task' | translate }}</button>
+        <button class="btn btn-primary w-100" (click)="onSubmit(form)" [disabled]="form.value.title == ''">{{ (isEditing ? 'global.save_task': 'global.create_task') | translate }}</button>
       </div>
     </div>
   </ion-toolbar>

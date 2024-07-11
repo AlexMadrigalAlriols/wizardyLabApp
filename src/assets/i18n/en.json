@@ -18,7 +18,10 @@
     "of": "of",
     "to": "to",
     "details": "Details",
-    "create_task": "Create Task"
+    "create_task": "Create Task",
+    "edit_task": "Edit Task",
+    "save_task": "Save Task",
+    "archive": "Archive"
   },
   "tabs": {
     "attendance": "Attendance",

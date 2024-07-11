@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { TimerService } from '../-services/timer.service';
 import { Subscription } from 'rxjs';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-task-details',
@@ -35,6 +36,10 @@ export class TaskDetailsPage implements OnInit {
       loadingElement.present();
     });
     await this.getTask(loading);
+
+    document.querySelectorAll('.dropdown-toggle').forEach(dropdownToggleEl => {
+      new bootstrap.Dropdown(dropdownToggleEl);
+    });
   }
 
   async getTask(loading: Promise<HTMLIonLoadingElement>) {
@@ -95,6 +100,26 @@ export class TaskDetailsPage implements OnInit {
       Swal.fire({
         toast: true,
         title: 'Comment Removed',
+        icon: 'success',
+        showConfirmButton: false,
+        position: 'top-end',
+        timer: 3000
+      });
+    });
+  }
+
+  async removeImage(imageId: any) {
+    const loading = this.loadingController.create();
+    loading.then(loadingElement => {
+      loadingElement.present();
+    });
+
+    await this.framework.delete('tasks/' + this.taskId + '/image/' + imageId, {}, true).subscribe((data: any) => {
+      this.getTask(loading);
+
+      Swal.fire({
+        toast: true,
+        title: 'Image Removed',
         icon: 'success',
         showConfirmButton: false,
         position: 'top-end',

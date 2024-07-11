@@ -18,7 +18,10 @@
     "of": "de",
     "to": "de",
     "details": "Detalles",
-    "create_task": "Crear tarea"
+    "create_task": "Crear tarea",
+    "edit_task": "Editar Tarea",
+    "save_task": "Guardar Tarea",
+    "archive": "Archivar"
   },
   "tabs": {
     "attendance": "Asistencia",

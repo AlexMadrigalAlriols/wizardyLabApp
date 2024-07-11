@@ -98,7 +98,7 @@
               <button
                 class="btn btn-options"
                 type="button"
-                id="dropdownMenuButton"
+                id="dropdownMenuImage"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
@@ -106,9 +106,19 @@
               </button>
               <ul
                 class="dropdown-menu"
-                aria-labelledby="dropdownMenuButton"
+                aria-labelledby="dropdownMenuImage"
               >
-                <li><a class="dropdown-item" href="{{ file.download_link }}"><i class='bx bxs-download' ></i> {{ 'global.download' | translate }}</a></li>
+                <li>
+                  <a class="dropdown-item" [href]="file.download_link">
+                    <i class='bx bxs-download'></i> {{ 'global.download' | translate }}
+                  </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <a class="dropdown-item text-danger" (click)="removeImage(file.id)">
+                    <i class="bx bx-trash"></i> {{ 'global.delete' | translate }}
+                  </a>
+                </li>
               </ul>
             </div>
           </div>

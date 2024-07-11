@@ -7,6 +7,7 @@ import { LoadingController } from '@ionic/angular';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject, Subscription, debounce, interval } from 'rxjs';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-tasks',
@@ -52,6 +53,10 @@ export class TasksPage {
     });
 
     await this.getTasks(loading);
+
+    document.querySelectorAll('.dropdown-toggle').forEach(dropdownToggleEl => {
+      new bootstrap.Dropdown(dropdownToggleEl);
+    });
   }
 
   toggleSubTasks(e: Event, task: any) {
@@ -61,29 +66,48 @@ export class TasksPage {
     task.expanded = task.expanded ? false : true;
   }
 
-  isTaskActive(task: any): boolean {
-    // lógica para verificar si una tarea está activa
-    return false;
+  async deleteTask(taskId: number) {
+    const loading = this.loadingController.create();
+    loading.then(loadingElement => {
+      loadingElement.present();
+    });
+
+    await this.framework.delete('tasks/' + taskId, {}, true).subscribe((data: any) => {
+      this.getTasks(loading);
+
+      Swal.fire({
+        toast: true,
+        title: 'Task Removed',
+        icon: 'success',
+        showConfirmButton: false,
+        position: 'top-end',
+        timer: 3000
+      });
+    });
   }
 
-  onPageChange(page: number) {
-    // lógica para cambiar de página
+  async archiveTask(taskId: number) {
+    const loading = this.loadingController.create();
+    loading.then(loadingElement => {
+      loadingElement.present();
+    });
+
+    await this.framework.post('tasks/' + taskId + '/archive', {}, true).subscribe((data: any) => {
+      this.getTasks(loading);
+
+      Swal.fire({
+        toast: true,
+        title: 'Task Archived',
+        icon: 'success',
+        showConfirmButton: false,
+        position: 'top-end',
+        timer: 3000
+      });
+    });
   }
 
-  openDropdown(event: Event) {
-    // lógica para abrir dropdown
-  }
-
-  deleteTask(taskId: number) {
-    // lógica para eliminar tarea
-  }
-
-  archiveTask(taskId: number) {
-    // lógica para archivar tarea
-  }
-
-  unarchiveTask(taskId: number) {
-    // lógica para desarchivar tarea
+  editTask(taskId: number) {
+    this.router.navigate(['/tabs/edit-task', taskId]);
   }
 
   async getTasks(loading: Promise<HTMLIonLoadingElement>, page: number = 1, search: string = '') {
