@@ -27,7 +27,7 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
   <key>NSLocationWhenInUseUsageDescription</key>
-  <string>We need your location to provide better services.</string>
+  <string>Turning on location services allows us to show where you clock in.</string>
   <key>NSLocationAlwaysUsageDescription</key>
   <string>We need your location even when the app is in the background.</string>
 	<key>UIRequiredDeviceCapabilities</key>
